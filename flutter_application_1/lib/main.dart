@@ -8,26 +8,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'First app',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: MyHomePage(),
+      title: 'Charactor card',
+      home: MyCard(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class MyCard extends StatelessWidget {
+  const MyCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('First app'),
-        ),
-        body: Center(
-          child: Column(
-            children: [Text('Hello'), Text('Hello'), Text('Hello')],
-          ),
-        ));
+      appBar: AppBar(
+        title: Text('BBANTO'),
+        centerTitle: true,
+        backgroundColor: Colors.redAccent,
+        elevation: 0.0,
+      ),
+
+      //가로축 정렬
+      body: Center(
+        child: Column(
+            //세로축 정렬
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Hello'),
+              Text('Hello'),
+              Text('Hello'),
+            ]),
+      ),
+    );
   }
 }

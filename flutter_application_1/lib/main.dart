@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,37 +23,31 @@ class MyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Snack Bar'),
+        title: Text('Toast messsage'),
         centerTitle: true,
       ),
-      body: MySnackBar(),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            flutterToast();
+          },
+          child: Text('Toast'),
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.blue,
+            primary: Colors.black,
+          ),
+        ),
+      ),
     );
   }
 }
 
-//업데이트 전 builder 없이 snack bar 만들기
-class MySnackBar extends StatelessWidget {
-  const MySnackBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-          child: Text('Show me'),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Hellow',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor: Colors.teal,
-                duration: Duration(milliseconds: 1000),
-              ),
-            );
-          }),
-    );
-  }
+void flutterToast() {
+  Fluttertoast.showToast(
+      msg: 'Flutter',
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.redAccent,
+      fontSize: 20.0,
+      textColor: Colors.white,
+      toastLength: Toast.LENGTH_SHORT);
 }

@@ -21,94 +21,27 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Appbar icon menu'),
-        centerTitle: true,
-        elevation: 0.0,
-
-        //actions: 복수의 아이콘 버튼 등을 오른쪽에 배치할 때
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              print('Shopping cart button is clicked');
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              print('Search button is clicked');
-            },
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/image.jpg'),
-                backgroundColor: Colors.white,
-              ),
-              otherAccountsPictures: [
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/dog.JPG'),
-                ),
-                // CircleAvatar(
-                //   backgroundImage: AssetImage('assets/dog.JPG'),
-                // ),
-              ],
-              accountName: Text('JEEWOO'),
-              accountEmail: Text('jeewoo@jeewoo.com'),
-              onDetailsPressed: () {
-                print('arrow is clicked');
-              },
-              decoration: BoxDecoration(
-                  color: Colors.red[200],
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(40.0),
-                      bottomRight: Radius.circular(40.0))),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.home,
-                color: Colors.grey[850],
-              ),
-              title: Text('Home'),
-              onTap: () {
-                print('Home is clicked');
-              },
-              //우측에 아이콘 배치
-              trailing: Icon(Icons.add),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.settings,
-                color: Colors.grey[850],
-              ),
-              title: Text('Setting'),
-              onTap: () {
-                print('Setting is clicked');
-              },
-              //우측에 아이콘 배치
-              trailing: Icon(Icons.add),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.question_answer,
-                color: Colors.grey[850],
-              ),
-              title: Text('Q&A'),
-              onTap: () {
-                print('Q&A is clicked');
-              },
-              //우측에 아이콘 배치
-              trailing: Icon(Icons.add),
-            ),
-          ],
+        appBar: AppBar(
+          title: Text('Snack Bar'),
+          centerTitle: true,
         ),
-      ),
-    );
+        body: Center(
+          //TextButton 입체감 없이
+          child: TextButton(
+            child: Text(
+              'Show me',
+              style: TextStyle(color: Colors.white),
+            ),
+            style: TextButton.styleFrom(
+                //primary: Colors.red,
+                backgroundColor: Colors.red),
+            onPressed: () {
+              //something.of(context): 주어진 context에서 위로 올라가면서 가장 가까운 something 찾아서 반환
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('Hellow'),
+              ));
+            },
+          ),
+        ));
   }
 }

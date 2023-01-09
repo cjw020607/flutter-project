@@ -7,9 +7,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //모든 위젯은 MaterialApp이 감싸고 있어야함
     return MaterialApp(
       title: 'Appbar',
-      theme: ThemeData(primarySwatch: Colors.red),
       home: MyPage(),
     );
   }
@@ -21,35 +21,40 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
-      body: SafeArea(
-        child: Row(
-          //세로로 최대한 확대
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              width: 100,
-              height: 100,
-              color: Colors.white,
-              child: Text('Container 1'),
-            ),
-            //container 사이의 간격
-            SizedBox(
-              width: 30.0,
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              color: Colors.blue,
-              child: Text('Container 2'),
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              color: Colors.red,
-              child: Text('Container 3'),
-            ),
-          ],
+      appBar: AppBar(
+        title: Text('First page'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+            child: Text('Go to the Second page'),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      //builder는 일종의 안전장치
+                      //context: 플러터에서 기본적으로 자동 지원되는 context
+                      builder: (context) => SecondPage()));
+            }),
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatelessWidget {
+  const SecondPage({super.key});
+
+  @override
+  Widget build(BuildContext ctx) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Second page'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text('Go to the First page'),
+          onPressed: () {
+            Navigator.pop(ctx);
+          },
         ),
       ),
     );

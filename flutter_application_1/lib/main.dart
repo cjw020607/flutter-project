@@ -1,24 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ScreenA.dart';
-import 'package:flutter_application_1/ScreenB.dart';
-import 'package:flutter_application_1/ScreenC.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  int counter = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //첫 route의 이름: '/'
-      initialRoute: '/',
-      routes: {
-        //'/'가 불려지면 value값인 ScreenA가 빌드 됨
-        '/': (context) => ScreenA(),
-        '/b': (context) => ScreenB(),
-        '/c': (context) => ScreenC()
-      },
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("You have pushed the button this many times:"),
+              Text(
+                '$counter',
+                style: Theme.of(context).textTheme.displayMedium,
+              )
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            counter++;
+            print('$counter');
+          },
+        ),
+      ),
     );
   }
 }

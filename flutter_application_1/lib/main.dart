@@ -2,75 +2,94 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
-//emutable(한번 생성되면 state가 변하지 않음) 속성 유지
-class MyApp extends StatefulWidget {
-  @override
-  //stateless widget은 build method에서 생성한 객체 바로 반환
-  //stateful widget는 createState method에서 생성한 객체를 반환
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return MyAppState();
-  }
-}
-
-//mutable 속성 대신함
-//state class는 generate type 가짐(State class에 generate type을 MyApp class로 지정하면 State class는  MyApp class type만 가짐)
-class MyAppState extends State<MyApp> {
-  int counter = 0;
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      debugShowCheckedModeBanner: false,
+      title: 'Dice game',
+      home: LogIn(),
+    );
+  }
+}
+
+class LogIn extends StatefulWidget {
+  @override
+  _LogInState createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Log in'),
+        backgroundColor: Colors.redAccent,
+        centerTitle: true,
+        leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.search), onPressed: () {})
+        ],
       ),
-      home: Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("You have pushed the button this many times:"),
-              Text(
-                //dirty
-                '$counter',
-                style: Theme.of(context).textTheme.displayMedium,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(padding: EdgeInsets.only(top: 50)),
+            Center(
+              child: Image(
+                image: AssetImage('image/chef.gif'),
+                width: 170.0,
+                height: 190.0,
               ),
-              //checkbox는 stateful widget
-              Checkbox(
-                value: false,
-                onChanged: (bool? value) {},
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FloatingActionButton(
-                    child: Icon(Icons.add),
-                    onPressed: () {
-                      //text는 stateless widget이므로 state 변화시키려면 build method를 호출해서 widget을 rebuild하는 방법밖에 없음
-                      //setState method통해 플러터가 대신 build method 호출해줌
-                      setState(() {
-                        counter++;
-                        print('$counter');
-                      });
-                    },
-                  ),
-                  SizedBox(width: 20),
-                  FloatingActionButton(
-                    child: Icon(Icons.remove),
-                    onPressed: () {
-                      setState(() {
-                        counter--;
-                        print('$counter');
-                      });
-                    },
-                  ),
-                ],
-              )
-            ],
-          ),
+            ),
+            //정보 입력 받을 때 주로 form 사용
+            Form(
+              child: Theme(
+                  data: ThemeData(
+                      //선
+                      primaryColor: Colors.teal,
+                      //글자
+                      inputDecorationTheme: InputDecorationTheme(
+                          labelStyle:
+                              TextStyle(color: Colors.teal, fontSize: 15.0))),
+                  //container는 child 하나밖에 가질 수 없으므로 column 사용
+                  child: Container(
+                    //끝에서 거리 떨어뜨리기
+                    padding: EdgeInsets.all(40.0),
+                    child: Column(
+                      children: [
+                        TextField(
+                          decoration: InputDecoration(
+                            labelText: 'Enter "dice"',
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        TextField(
+                          decoration: InputDecoration(
+                            labelText: 'Enter Password',
+                          ),
+                          keyboardType: TextInputType.text,
+                          obscureText: true,
+                        ),
+                        SizedBox(height: 40.0),
+                        ButtonTheme(
+                            minWidth: 100.0,
+                            height: 50.0,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.orangeAccent),
+                              child: Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: 35.0,
+                              ),
+                              onPressed: () {},
+                            )),
+                      ],
+                    ),
+                  )),
+            )
+          ],
         ),
       ),
     );

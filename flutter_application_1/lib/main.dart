@@ -37,84 +37,93 @@ class _LogInState extends State<LogIn> {
       ),
       body: Builder(
         builder: (context) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(padding: EdgeInsets.only(top: 50)),
-                Center(
-                  child: Image(
-                    image: AssetImage('image/chef.gif'),
-                    width: 170.0,
-                    height: 190.0,
+          return GestureDetector(
+            //onTap: 버튼 외에도 다양한 이벤트 구현
+            onTap: () {
+              //빈 공간을 탭하면 키보드가 사라짐
+              FocusScope.of(context).unfocus();
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(padding: EdgeInsets.only(top: 50)),
+                  Center(
+                    child: Image(
+                      image: AssetImage('image/chef.gif'),
+                      width: 170.0,
+                      height: 190.0,
+                    ),
                   ),
-                ),
-                //정보 입력 받을 때 주로 form 사용
-                Form(
-                  child: Theme(
-                      data: ThemeData(
-                          //선
-                          primaryColor: Colors.teal,
-                          //글자
-                          inputDecorationTheme: InputDecorationTheme(
-                              labelStyle: TextStyle(
-                                  color: Colors.teal, fontSize: 15.0))),
-                      //container는 child 하나밖에 가질 수 없으므로 column 사용
-                      child: Container(
-                        //끝에서 거리 떨어뜨리기
-                        padding: EdgeInsets.all(40.0),
-                        child: Column(
-                          children: [
-                            TextField(
-                              controller: controller,
-                              decoration: InputDecoration(
-                                labelText: 'Enter "dice"',
+                  //정보 입력 받을 때 주로 form 사용
+                  Form(
+                    child: Theme(
+                        data: ThemeData(
+                            //선
+                            primaryColor: Colors.teal,
+                            //글자
+                            inputDecorationTheme: InputDecorationTheme(
+                                labelStyle: TextStyle(
+                                    color: Colors.teal, fontSize: 15.0))),
+                        //container는 child 하나밖에 가질 수 없으므로 column 사용
+                        child: Container(
+                          //끝에서 거리 떨어뜨리기
+                          padding: EdgeInsets.all(40.0),
+                          child: Column(
+                            children: [
+                              TextField(
+                                //시작부터 키보드 자동으로 올라옴
+                                //autofocus: true,
+                                controller: controller,
+                                decoration: InputDecoration(
+                                  labelText: 'Enter "dice"',
+                                ),
+                                keyboardType: TextInputType.emailAddress,
                               ),
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            TextField(
-                              controller: controller2,
-                              decoration: InputDecoration(
-                                labelText: 'Enter Password',
+                              TextField(
+                                controller: controller2,
+                                decoration: InputDecoration(
+                                  labelText: 'Enter Password',
+                                ),
+                                keyboardType: TextInputType.text,
+                                obscureText: true,
                               ),
-                              keyboardType: TextInputType.text,
-                              obscureText: true,
-                            ),
-                            SizedBox(height: 40.0),
-                            ButtonTheme(
-                                minWidth: 100.0,
-                                height: 50.0,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.orangeAccent),
-                                  child: Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.white,
-                                    size: 35.0,
-                                  ),
-                                  onPressed: () {
-                                    if (controller.text == 'dice' &&
-                                        controller2.text == '1234') {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (BuildContext) =>
-                                                  Dice()));
-                                    } else if (controller.text == 'dice' &&
-                                        controller2.text != '1234') {
-                                      showSnackBar2(context);
-                                    } else if (controller.text != 'dice' &&
-                                        controller2.text == '1234') {
-                                      showSnackBar3(context);
-                                    } else {
-                                      showSnackBar(context);
-                                    }
-                                  },
-                                )),
-                          ],
-                        ),
-                      )),
-                )
-              ],
+                              SizedBox(height: 40.0),
+                              ButtonTheme(
+                                  minWidth: 100.0,
+                                  height: 50.0,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.orangeAccent),
+                                    child: Icon(
+                                      Icons.arrow_forward,
+                                      color: Colors.white,
+                                      size: 35.0,
+                                    ),
+                                    onPressed: () {
+                                      if (controller.text == 'dice' &&
+                                          controller2.text == '1234') {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (BuildContext) =>
+                                                    Dice()));
+                                      } else if (controller.text == 'dice' &&
+                                          controller2.text != '1234') {
+                                        showSnackBar2(context);
+                                      } else if (controller.text != 'dice' &&
+                                          controller2.text == '1234') {
+                                        showSnackBar3(context);
+                                      } else {
+                                        showSnackBar(context);
+                                      }
+                                    },
+                                  )),
+                            ],
+                          ),
+                        )),
+                  )
+                ],
+              ),
             ),
           );
         },

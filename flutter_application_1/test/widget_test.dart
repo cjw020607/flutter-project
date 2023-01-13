@@ -1,30 +1,39 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flutter_application_1/main.dart';
+import 'dart:io';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  showData();
+}
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+void showData() {
+  startTask();
+  accessData();
+  fetchData();
+}
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+void startTask() {
+  String info1 = '요청수행 시작';
+  print(info1);
+}
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+void accessData() {
+  //3초 지연
+  // sleep(time);
+
+  Duration time = Duration(seconds: 3);
+
+  if (time.inSeconds > 2) {
+    //accessData 지연되는동안 fetchData 먼저 프린트 됨
+    Future.delayed(time, () {
+      String info2 = '데이터에 처리 완료';
+      print(info2);
+    });
+  } else {
+    String info2 = '데이터를 가져왔습니다.';
+    print(info2);
+  }
+}
+
+void fetchData() {
+  String info3 = '잔액은 8,500만원 입니다.';
+  print(info3);
 }

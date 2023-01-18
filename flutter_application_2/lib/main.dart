@@ -11,119 +11,118 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: MyPage(),
+      home: MyButtons(),
     );
   }
 }
 
-class MyPage extends StatelessWidget {
-  const MyPage({super.key});
+class MyButtons extends StatelessWidget {
+  const MyButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Scaffold Messenger'),
-      ),
-      body: HomeBody(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.thumb_up),
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Like a new Snack bar!'),
-              duration: Duration(seconds: 5),
-              action: SnackBarAction(
-                //스낵바 오른쪽 배치
-                label: 'Undo',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ThirdPage()),
-                  );
-                },
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class HomeBody extends StatelessWidget {
-  const HomeBody({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        child: Text('Go to the second page'),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SecondPage()),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Second Page'),
+        title: Text('Buttons'),
+        centerTitle: true,
       ),
       body: Center(
-        child: Text(
-          '"좋아요가 추가되었습니다"',
-          style: TextStyle(fontSize: 20.0, color: Colors.redAccent),
-        ),
-      ),
-    );
-  }
-}
-
-class ThirdPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ScaffoldMessenger(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Third Page'),
-        ),
-        //새 context 생성해서 scaffoldmessonger.of(context)에 전달해줌 (third page 나가면 스낵바 같이 없어지게 하기)
-        body: Builder(builder: (context) {
-          //builder 위젯은 반드시 위젯을 return 해야 함
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                print('text button');
+              },
+              //길게 눌렀을 때
+              onLongPress: () {
+                print('text button~');
+              },
+              child: Text(
+                'Text button',
+                style: TextStyle(fontSize: 20.0),
+              ),
+              style: TextButton.styleFrom(
+                //primary->foregroundColor
+                primary: Colors.red,
+                //backgroundColor: Colors.blue
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                print('Elevated button');
+              },
+              child: Text('Elevated button'),
+              style: ElevatedButton.styleFrom(
+                  //elvatedbutton에서는 primary가 버튼 색, 그러나 backgroundColor가 생김
+                  primary: Colors.orangeAccent,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  elevation: 0.0),
+            ),
+            OutlinedButton(
+                onPressed: () {
+                  print('Outlined button');
+                },
+                child: Text('Outlined button'),
+                style: OutlinedButton.styleFrom(
+                    //primary->foregroundColor
+                    primary: Colors.green,
+                    side: BorderSide(color: Colors.black87, width: 2.0))),
+            TextButton.icon(
+              onPressed: () {
+                print('Icon button');
+              },
+              icon: Icon(
+                Icons.home,
+                size: 30.0,
+                //icon 색상 지정 안하면 button의 foregroundcolor(primary) 색에 따라 바뀜
+                color: Colors.black87,
+              ),
+              label: Text('Go to home'),
+              style: TextButton.styleFrom(
+                primary: Colors.purple,
+              ),
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                print('Go to home');
+              },
+              icon: Icon(
+                Icons.home,
+              ),
+              label: Text('Go to home'),
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.black, minimumSize: Size(200, 50)),
+            ),
+            OutlinedButton.icon(
+              onPressed: null,
+              icon: Icon(
+                Icons.home,
+              ),
+              label: Text('Go to home'),
+              style: OutlinedButton.styleFrom(
+                  primary: Colors.black,
+                  //비활성화된 버튼 색 바꿈
+                  onSurface: Colors.pink),
+            ),
+            //가로 방향으로 끝 정렬(공간 부족하면 세로 방향으로 정렬)
+            ButtonBar(
+              alignment: MainAxisAlignment.center,
+              buttonPadding: EdgeInsets.all(20),
               children: [
-                Text(
-                  '"좋아요를 취소 하시겠습니까?"',
-                  style: TextStyle(fontSize: 20.0, color: Colors.redAccent),
+                TextButton(
+                  onPressed: () {},
+                  child: Text("TextButton"),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    //scafford 찾을 수 없음
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('"좋아요"가 취소되었습니다.'),
-                        duration: Duration(seconds: 3),
-                      ),
-                    );
-                  },
-                  child: Text('취소하기'),
+                  onPressed: () {},
+                  child: Text("ElevatedButton"),
                 ),
               ],
-            ),
-          );
-        }),
+            )
+          ],
+        ),
       ),
     );
   }

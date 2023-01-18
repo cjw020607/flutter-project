@@ -1,129 +1,159 @@
 import 'package:flutter/material.dart';
+import 'dice.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: MyButtons(),
+      debugShowCheckedModeBanner: false,
+      title: 'Dice game',
+      home: LogIn(),
     );
   }
 }
 
-class MyButtons extends StatelessWidget {
-  const MyButtons({super.key});
+class LogIn extends StatefulWidget {
+  @override
+  _LogInState createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
+  bool emailField = true;
+  TextEditingController controller = TextEditingController();
+  TextEditingController controller2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Buttons'),
+        title: Text('Log in'),
+        backgroundColor: Colors.redAccent,
         centerTitle: true,
+        leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.search), onPressed: () {})
+        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () {
-                print('text button');
-              },
-              //길게 눌렀을 때
-              onLongPress: () {
-                print('text button~');
-              },
-              child: Text(
-                'Text button',
-                style: TextStyle(fontSize: 20.0),
-              ),
-              style: TextButton.styleFrom(
-                //primary->foregroundColor
-                primary: Colors.red,
-                //backgroundColor: Colors.blue
+      body: Builder(
+        builder: (context) {
+          return GestureDetector(
+            //onTap: 버튼 외에도 다양한 이벤트 구현
+            onTap: () {
+              //빈 공간을 탭하면 키보드가 사라짐
+              FocusScope.of(context).unfocus();
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(padding: EdgeInsets.only(top: 50)),
+                  Center(
+                    child: Image(
+                      image: AssetImage('image/chef.gif'),
+                      width: 170.0,
+                      height: 190.0,
+                    ),
+                  ),
+                  //정보 입력 받을 때 주로 form 사용
+                  Form(
+                    child: Theme(
+                        data: ThemeData(
+                            //선
+                            primaryColor: Colors.teal,
+                            //글자
+                            inputDecorationTheme: InputDecorationTheme(
+                                labelStyle: TextStyle(
+                                    color: Colors.teal, fontSize: 15.0))),
+                        //container는 child 하나밖에 가질 수 없으므로 column 사용
+                        child: Container(
+                          //끝에서 거리 떨어뜨리기
+                          padding: EdgeInsets.all(40.0),
+                          child: Column(
+                            children: [
+                              //emailfiled값이 true일 때
+                              if (emailField)
+                                TextField(
+                                  key: ValueKey(1),
+                                  //시작부터 키보드 자동으로 올라옴
+                                  //autofocus: true,
+                                  //controller: controller,
+                                  decoration: InputDecoration(
+                                    labelText: 'Enter "dice"',
+                                  ),
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
+                              TextField(
+                                key: ValueKey(2),
+                                //controller: controller2,
+                                decoration: InputDecoration(
+                                  labelText: 'Enter Password',
+                                ),
+                                keyboardType: TextInputType.text,
+                                obscureText: false,
+                              ),
+                              SizedBox(height: 40.0),
+                              ButtonTheme(
+                                  minWidth: 100.0,
+                                  height: 50.0,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.purple,
+                                        minimumSize: Size(150, 50)),
+                                    child: Icon(
+                                      Icons.visibility_off,
+                                      color: Colors.white,
+                                      size: 35.0,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        emailField = false;
+                                      });
+                                    },
+                                  )),
+                            ],
+                          ),
+                        )),
+                  )
+                ],
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                print('Elevated button');
-              },
-              child: Text('Elevated button'),
-              style: ElevatedButton.styleFrom(
-                  //elvatedbutton에서는 primary가 버튼 색, 그러나 backgroundColor가 생김
-                  primary: Colors.orangeAccent,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  elevation: 0.0),
-            ),
-            OutlinedButton(
-                onPressed: () {
-                  print('Outlined button');
-                },
-                child: Text('Outlined button'),
-                style: OutlinedButton.styleFrom(
-                    //primary->foregroundColor
-                    primary: Colors.green,
-                    side: BorderSide(color: Colors.black87, width: 2.0))),
-            TextButton.icon(
-              onPressed: () {
-                print('Icon button');
-              },
-              icon: Icon(
-                Icons.home,
-                size: 30.0,
-                //icon 색상 지정 안하면 button의 foregroundcolor(primary) 색에 따라 바뀜
-                color: Colors.black87,
-              ),
-              label: Text('Go to home'),
-              style: TextButton.styleFrom(
-                primary: Colors.purple,
-              ),
-            ),
-            ElevatedButton.icon(
-              onPressed: () {
-                print('Go to home');
-              },
-              icon: Icon(
-                Icons.home,
-              ),
-              label: Text('Go to home'),
-              style: ElevatedButton.styleFrom(
-                  primary: Colors.black, minimumSize: Size(200, 50)),
-            ),
-            OutlinedButton.icon(
-              onPressed: null,
-              icon: Icon(
-                Icons.home,
-              ),
-              label: Text('Go to home'),
-              style: OutlinedButton.styleFrom(
-                  primary: Colors.black,
-                  //비활성화된 버튼 색 바꿈
-                  onSurface: Colors.pink),
-            ),
-            //가로 방향으로 끝 정렬(공간 부족하면 세로 방향으로 정렬)
-            ButtonBar(
-              alignment: MainAxisAlignment.center,
-              buttonPadding: EdgeInsets.all(20),
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: Text("TextButton"),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("ElevatedButton"),
-                ),
-              ],
-            )
-          ],
-        ),
+          );
+        },
       ),
     );
   }
+}
+
+void showSnackBar(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      '로그인 정보를 다시 확인하세요',
+      textAlign: TextAlign.center,
+    ),
+    duration: Duration(seconds: 2),
+    backgroundColor: Colors.blue,
+  ));
+}
+
+void showSnackBar2(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      '비밀번호가 일치하지 않습니다',
+      textAlign: TextAlign.center,
+    ),
+    duration: Duration(seconds: 2),
+    backgroundColor: Colors.blue,
+  ));
+}
+
+void showSnackBar3(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      'dice의 철자를 확인하세요',
+      textAlign: TextAlign.center,
+    ),
+    duration: Duration(seconds: 2),
+    backgroundColor: Colors.blue,
+  ));
 }

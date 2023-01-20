@@ -17,6 +17,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       backgroundColor: Palette.backgroundColor,
       body: Stack(
         children: [
+          //배경
           Positioned(
               top: 0,
               right: 0,
@@ -44,7 +45,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               color: Colors.white),
                           children: [
                             TextSpan(
-                              text: ' to Yummy chat!',
+                              text:
+                                  isSignupScreen ? ' to Yummy chat!' : ' back',
                               style: TextStyle(
                                   letterSpacing: 1.0,
                                   fontSize: 25,
@@ -58,7 +60,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                         height: 5.0,
                       ),
                       Text(
-                        'Signup to continue',
+                        isSignupScreen
+                            ? 'Signup to continue'
+                            : 'Signin to continue',
                         style: TextStyle(
                           letterSpacing: 1.0,
                           color: Colors.white,
@@ -68,12 +72,18 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   ),
                 ),
               )),
-          Positioned(
+          //textFormField
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 500),
+            //어떤 애니메이션 효과를 줄지 결정
+            curve: Curves.easeIn,
             top: 180,
-            child: Container(
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeIn,
               //container 안의 내용과의 간격
               padding: EdgeInsets.all(20.0),
-              height: 280.0,
+              height: isSignupScreen ? 280.0 : 250.0,
               //각 디바이스의 실제 너비 값
               width: MediaQuery.of(context).size.width - 40,
               //좌우여백
@@ -156,43 +166,254 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                       )
                     ],
                   ),
-                  Container(
-                    //validation check위해
-                    child: Form(
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.account_circle,
-                                color: Palette.iconColor,
-                              ),
-                              //둥근 outlineborder 만듦
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Palette.textColor1),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(35.0),
-                                ),
-                              ),
-                              //textline 선택해도 border line 계속 유지함
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Palette.textColor1),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(35.0),
-                                ),
-                              ),
+                  if (isSignupScreen)
+                    Container(
+                      //Signup의 밑줄과 떨어뜨리기 위해 간격 설정
+                      margin: EdgeInsets.only(top: 20),
+                      //validation check위해
+                      child: Form(
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.account_circle,
+                                    color: Palette.iconColor,
+                                  ),
+                                  //둥근 outlineborder 만듦
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.textColor1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                  ),
+                                  //textline 선택해도 border line 계속 유지함
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.textColor1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                  ),
+                                  hintText: 'User name',
+                                  hintStyle: TextStyle(
+                                      fontSize: 14, color: Palette.textColor1),
+                                  //크기 조정 (textfield와 자주 사용됨)
+                                  contentPadding: EdgeInsets.all(10)),
                             ),
-                          )
-                        ],
+                            SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                    color: Palette.iconColor,
+                                  ),
+                                  //둥근 outlineborder 만듦
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.textColor1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                  ),
+                                  //textline 선택해도 border line 계속 유지함
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.textColor1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                  ),
+                                  hintText: 'Password',
+                                  hintStyle: TextStyle(
+                                      fontSize: 14, color: Palette.textColor1),
+                                  //크기 조정 (textfield와 자주 사용됨)
+                                  contentPadding: EdgeInsets.all(10)),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.email,
+                                    color: Palette.iconColor,
+                                  ),
+                                  //둥근 outlineborder 만듦
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.textColor1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                  ),
+                                  //textline 선택해도 border line 계속 유지함
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.textColor1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                  ),
+                                  hintText: 'Email',
+                                  hintStyle: TextStyle(
+                                      fontSize: 14, color: Palette.textColor1),
+                                  //크기 조정 (textfield와 자주 사용됨)
+                                  contentPadding: EdgeInsets.all(10)),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  )
+                  if (!isSignupScreen)
+                    Container(
+                      margin: EdgeInsets.only(top: 20),
+                      child: Form(
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.account_circle,
+                                    color: Palette.iconColor,
+                                  ),
+                                  //둥근 outlineborder 만듦
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.textColor1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                  ),
+                                  //textline 선택해도 border line 계속 유지함
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.textColor1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                  ),
+                                  hintText: 'User name',
+                                  hintStyle: TextStyle(
+                                      fontSize: 14, color: Palette.textColor1),
+                                  //크기 조정 (textfield와 자주 사용됨)
+                                  contentPadding: EdgeInsets.all(10)),
+                            ),
+                            SizedBox(
+                              height: 8.0,
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                    color: Palette.iconColor,
+                                  ),
+                                  //둥근 outlineborder 만듦
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.textColor1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                  ),
+                                  //textline 선택해도 border line 계속 유지함
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.textColor1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                  ),
+                                  hintText: 'Password',
+                                  hintStyle: TextStyle(
+                                      fontSize: 14, color: Palette.textColor1),
+                                  //크기 조정 (textfield와 자주 사용됨)
+                                  contentPadding: EdgeInsets.all(10)),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
                 ],
               ),
             ),
-          )
+          ),
+          //전송버튼
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 500),
+            curve: Curves.easeIn,
+            top: isSignupScreen ? 430 : 390,
+            //가능한 모든 공간을 모두 차지해서 길어지기 때문에 container를 ceter로 감싸줌
+            right: 0,
+            left: 0,
+            child: Center(
+              child: Container(
+                //안쪽 원과의 간격을 주기 위해
+                padding: EdgeInsets.all(15),
+                height: 90,
+                width: 90,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    //여러 색 사용
+                    gradient: LinearGradient(
+                        colors: [Colors.orange, Colors.red],
+                        //button의 gradient 방향 지정
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3),
+                        //그림자 퍼지는 반지름
+                        spreadRadius: 1,
+                        //흐릿한 효과 반지름
+                        blurRadius: 1,
+                        //한 지점에서 다른 지점까지의 거리
+                        //오렌지 버튼과 그림자간의 위치
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).size.height - 125,
+            right: 0,
+            left: 0,
+            child: Center(
+              child: Column(
+                children: [
+                  Text(isSignupScreen ? 'or Signup with' : 'or Sigin with'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextButton.icon(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        minimumSize: Size(155, 40),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        backgroundColor: Palette.googleColor),
+                    icon: Icon(Icons.add),
+                    label: Text('Google'),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
